@@ -1231,19 +1231,19 @@ public class Uploader extends Composite implements IsUpdateable, IUploader, HasJ
       long totalKB = Long.valueOf(Utils.getXmlNodeValue(doc, TAG_TOTAL_BYTES)) / 1024;
       statusWidget.setProgress(transferredKB, totalKB);
       log("server response transferred  " + transferredKB + "/" + totalKB + " " + getFileNames(), null);
-//      if (onSubmitComplete) {
-//        successful = false;
-//        String msg = i18nStrs.uploaderBadServerResponse() + "\n" + serverRawResponse;
-//        if (blobstore) {
-//          msg += "\n" + i18nStrs.uploaderBlobstoreBilling();
-//        } else {
-//          msg += "\n" + i18nStrs.uploaderBadParsing();
-//        }
-//        msg += "\n\n" + responseTxt;
-//        log(msg, null);
+      if (onSubmitComplete) {
+        successful = false;
+        String msg = i18nStrs.uploaderBadServerResponse() + "\n" + serverRawResponse;
+        if (blobstore) {
+          msg += "\n" + i18nStrs.uploaderBlobstoreBilling();
+        } else {
+          msg += "\n" + i18nStrs.uploaderBadParsing();
+        }
+        msg += "\n\n" + responseTxt;
+        log(msg, null);
 //        statusWidget.setError(msg);
-//        uploadFinished();
-//      }
+        uploadFinished();
+      }
       return;
     } else {
       log("incorrect response: " + getFileNames() + " " + responseTxt, null);
