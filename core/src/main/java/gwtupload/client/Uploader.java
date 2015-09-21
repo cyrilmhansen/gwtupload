@@ -1232,7 +1232,7 @@ public class Uploader extends Composite implements IsUpdateable, IUploader, HasJ
       statusWidget.setProgress(transferredKB, totalKB);
       log("server response transferred  " + transferredKB + "/" + totalKB + " " + getFileNames(), null);
       if (onSubmitComplete) {
-        successful = false;
+        successful = true; // why suppose an error here in this case ?
         String msg = i18nStrs.uploaderBadServerResponse() + "\n" + serverRawResponse;
         if (blobstore) {
           msg += "\n" + i18nStrs.uploaderBlobstoreBilling();
@@ -1240,8 +1240,8 @@ public class Uploader extends Composite implements IsUpdateable, IUploader, HasJ
           msg += "\n" + i18nStrs.uploaderBadParsing();
         }
         msg += "\n\n" + responseTxt;
-        log(msg, null);
-//        statusWidget.setError(msg);
+        log(msg, null); // keep log message anyway
+//        statusWidget.setError(msg); // disable the user visible error message
         uploadFinished();
       }
       return;
