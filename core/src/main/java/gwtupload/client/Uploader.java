@@ -446,7 +446,7 @@ public class Uploader extends Composite implements IsUpdateable, IUploader, HasJ
       } catch (Exception e) {
         log("onSubmitComplete exception parsing response (Check CORS and XML syntax): ", e);
         // Otherwise force an ajax request so as we have not to wait to the timer schedule
-        updateStatusTimer.run();
+        updateStatusTimer.run(); // how could the upload server response be corrupted ??
       }
     }
   };
@@ -1231,19 +1231,19 @@ public class Uploader extends Composite implements IsUpdateable, IUploader, HasJ
       long totalKB = Long.valueOf(Utils.getXmlNodeValue(doc, TAG_TOTAL_BYTES)) / 1024;
       statusWidget.setProgress(transferredKB, totalKB);
       log("server response transferred  " + transferredKB + "/" + totalKB + " " + getFileNames(), null);
-      if (onSubmitComplete) {
-        successful = false;
-        String msg = i18nStrs.uploaderBadServerResponse() + "\n" + serverRawResponse;
-        if (blobstore) {
-          msg += "\n" + i18nStrs.uploaderBlobstoreBilling();
-        } else {
-          msg += "\n" + i18nStrs.uploaderBadParsing();
-        }
-        msg += "\n\n" + responseTxt;
-        log(msg, null);
-        statusWidget.setError(msg);
-        uploadFinished();
-      }
+//      if (onSubmitComplete) {
+//        successful = false;
+//        String msg = i18nStrs.uploaderBadServerResponse() + "\n" + serverRawResponse;
+//        if (blobstore) {
+//          msg += "\n" + i18nStrs.uploaderBlobstoreBilling();
+//        } else {
+//          msg += "\n" + i18nStrs.uploaderBadParsing();
+//        }
+//        msg += "\n\n" + responseTxt;
+//        log(msg, null);
+//        statusWidget.setError(msg);
+//        uploadFinished();
+//      }
       return;
     } else {
       log("incorrect response: " + getFileNames() + " " + responseTxt, null);
